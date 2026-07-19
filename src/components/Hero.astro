@@ -1,0 +1,42 @@
+---
+const telefono = "961662500";
+const linkDelivery = `http://temp`;
+const linkReserva = `http://temp`;
+---
+
+<section class="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-orange-100/70 via-orange-50/30 to-stone-50 px-4 py-20 text-center overflow-hidden">
+    
+    <div class="max-w-3xl mx-auto relative z-10">
+        <span class="inline-block bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+            Auténtico Sabor Tradicional
+        </span>
+        
+        <h1 class="text-5xl md:text-7xl font-black text-stone-950 tracking-tight leading-none">
+            Donde cada plato <br />
+            <span class="text-orange-600">cuenta una historia</span>
+        </h1>
+        
+        <p class="text-stone-600 mt-6 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
+             Disfruta de nuestros espectaculares platos típicos del día y celebra tus momentos especiales con nosotros.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
+            <a 
+                href={linkDelivery}
+                target="_blank"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black py-4 px-8 rounded-2xl text-lg shadow-lg shadow-emerald-200 transition-all active:scale-95"
+            >
+                Pedir Delivery (Wpp)
+            </a>
+
+            <a 
+                href={linkReserva}
+                target="_blank"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-stone-900 hover:bg-stone-800 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-lg shadow-stone-900/10 transition-all active:scale-95"
+            >
+                Cotizar reserva
+            </a>
+        </div>
+    </div>
+
+</section>

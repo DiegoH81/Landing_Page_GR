@@ -1,8 +1,10 @@
 ---
 import "../styles/global.css"
 
+import Hero from "../components/Hero.astro"
 import Plato from "../components/PlatoCard.astro"
 import Evento from "../components/EventoCard.astro"
+import type { $brand } from "astro:schema"
 ---
 
 <html lang="en">
@@ -15,6 +17,7 @@ import Evento from "../components/EventoCard.astro"
 		<title>Astro</title>
 	</head>
 	<body>
+		<Hero />
 		<Plato 
         nombre="Zapatillas Air Max" 
         precio="S/.120.00" 
