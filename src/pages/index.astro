@@ -1,5 +1,14 @@
 ---
+import "../styles/global.css"
 
+import NavBar from "../components/Navbar.astro"
+import Hero from "../components/Hero.astro"
+import AboutUs from "../components/AboutUs.astro"
+import Caldos from "../components/CaldoDelDia.astro"
+import Evento from "../components/EventoCard.astro"
+import Contacto from "../components/Contacto.astro"
+
+import type { $brand } from "astro:schema"
 ---
 
 <html lang="en">
@@ -12,6 +21,26 @@
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+        <NavBar/>
+		<Hero />
+        <AboutUs/>
+		<Caldos/>
+
+        <Evento
+            titulo="Almuerzos Corporativos"
+            descripcion="Si planeas brindar un agasajo a tus colaboradores en una fecha especial, disfruta de una celebración inolvidable llena de detalles, los mejores sabores regionales y un ambiente único."
+            imagen="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000"
+            textoBoton="CONSULTAR PAQUETES"
+        />
+
+        <Evento
+            titulo="Terraza y Salones Privados"
+            descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
+            imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
+            textoBoton="VER AMBIENTES"
+            reversed={true}
+        />
+        
+        <Contacto />
 	</body>
 </html>
