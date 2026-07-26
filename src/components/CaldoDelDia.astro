@@ -1,0 +1,97 @@
+---
+import PlatoCard from '../components/PlatoCard.astro';
+
+const caldos = [
+    {
+        nombre: "Chaque Arequipeño",
+        imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
+    },
+    {
+        nombre: "Chairo Tradicional",
+        imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
+    },
+    {
+        nombre: "Sopa de Chochoca",
+        imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
+    },
+    {
+        nombre: "Menestron Arequipeño",
+        imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
+    },
+    {
+        nombre: "Chuño Arequipeño",
+        imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
+    }
+];
+
+const caldosLoop = [...caldos, ...caldos, ...caldos]
+---
+
+
+
+<section class="py-16 bg-brand-red">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+            <div>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-cream">
+                    Caldos Típicos del Día
+                </h2>
+            </div>
+        </div>
+
+        <div class="overflow-hidden">
+            <div class="flex gap-6" id="Carrousel">
+                {caldosLoop.map((caldo) => (
+                    <div class="shrink-0 w-[280px] sm:w-[320px] md:w-[360px]">
+                        <PlatoCard nombre={caldo.nombre} imagen={caldo.imagen} />
+                    </div>
+                ))}
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    import { animate } from "motion";
+
+    const track = document.getElementById('Carrousel') as HTMLDivElement;
+    const cardWidth = 320 + 24; // ancho card + gap, ajusta a tu real
+    const setWidth = cardWidth * 5; // 5 = caldos.length (el set real, no el triple)
+
+    let x = -setWidth; // arrancamos en el set del medio
+    track.style.transform = `translateX(${x}px)`;
+
+    let isDown = false;
+    let startX = 0;
+    let startTx = 0;
+
+    track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.clientX;
+        startTx = x;
+        track.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const dx = e.clientX - startX;
+        x = startTx + dx;
+        track.style.transform = `translateX(${x}px)`;
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!isDown) return;
+        isDown = false;
+        track.style.cursor = 'grab';
+
+        // wrap infinito: si te pasaste del set, reposicionas SIN animación
+        if (x > 0) x -= setWidth;
+        if (x < -setWidth * 2) x += setWidth;
+        track.style.transform = `translateX(${x}px)`;
+    });
+
+    track.querySelectorAll('img').forEach((img) => {
+        img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+</script>
