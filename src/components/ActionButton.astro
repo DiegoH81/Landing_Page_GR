@@ -1,0 +1,30 @@
+---
+interface Props
+{
+    href: string;
+    target?: "_blank" | "_self";
+    icon?: string;
+}
+
+const { 
+    href, 
+    target = "_blank",
+    icon = ""
+} = Astro.props;
+
+---
+
+<a 
+    href={href}
+    target={target}
+    rel={target === "_blank" ? "noopener noreferrer" : undefined}
+    class="w-full sm:w-auto inline-flex items-center justify-center gap-3 
+            font-normal py-8 px-8 shadow-lg shadow-brand-red/20 bg-brand-red
+            hover:opacity-90 text-white transition-all duration-300 hover:-translate-y-0.5
+            active:translate-y-0 active:scale-95
+            text-2xl sm:text-base">
+    {icon && <span>{icon}</span>}
+    <span>
+        <slot />
+    </span>
+</a>

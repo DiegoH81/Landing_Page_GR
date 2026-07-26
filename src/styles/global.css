@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme
+{
+    --color-brand-red: #9A3425;
+    --color-brand-chocolate: #3E2C1C;
+    --color-brand-mustard: #EC981B;
+    --color-brand-brown: #2D1C10;
+    --color-brand-cream: #F5F3ED;
+}
+
+body
+{
+    font-family: var(--font-sans);
+}

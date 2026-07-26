@@ -1,0 +1,26 @@
+---
+interface Props {
+    nombre: string;
+    imagen: string;
+}
+
+const { nombre, imagen } = Astro.props;
+---
+
+<div class="bg-white overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group border border-stone-100">
+    <div class="relative h-64 sm:h-72 overflow-hidden bg-stone-100">
+        <img 
+            src={imagen} 
+            alt={nombre} 
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+        />
+    </div>
+
+    <div class="p-5 text-center bg-white">
+        <h3 class="text-xl font-medium text-brand-brown group-hover:text-brand-red transition-colors tracking-wide">
+            {nombre}
+        </h3>
+    </div>
+</div>
+

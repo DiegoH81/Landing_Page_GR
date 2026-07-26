@@ -1,0 +1,44 @@
+---
+import ActionButton from './ActionButton.astro';
+
+const links = [
+  { name: 'Inicio', href: '#' },
+  { name: 'Carta', href: '#carta' },
+  { name: 'Platos del día', href: '#platos' },
+  { name: 'Eventos', href: '#eventos' },
+  { name: 'Nosotros', href: '#nosotros' },
+  { name: 'Contacto', href: '#contacto' },
+];
+
+const telefono = "961662500";
+---
+
+<header class="fixed top-0 left-0 w-full z-50 p-4 sm:p-6 pointer-events-none">
+    <div class="max-w-7xl mx-auto flex items-stretch justify-between gap-3 pointer-events-auto">
+
+
+    <a 
+        href="#"
+        class="bg-brand-red text-brand-cream px-6 py-4 font-black text-2xl tracking-widest flex items-center justify-center transition-opacity shadow-md font-['cursive']"
+    >
+        GR
+    </a>
+
+
+    <nav class="hidden lg:flex items-center gap-6 bg-brand-cream px-8 py-3 text-sm font-semibold text-brand-red shadow-md">
+        {links.map((link) => (
+        <a 
+            href = {link.href} 
+            class = "hover:underline underline-offset-4 decoration-2 transition-all whitespace-nowrap"
+        >
+            {link.name}
+        </a>
+        ))}
+    </nav>
+
+    <ActionButton href={`tel:${telefono}`}>
+            Pedir Delivery
+    </ActionButton>    
+
+    </div>
+</header>
