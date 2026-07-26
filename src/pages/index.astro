@@ -1,7 +1,10 @@
 ---
 import "../styles/global.css"
 
+import NavBar from "../components/Navbar.astro"
 import Hero from "../components/Hero.astro"
+import AboutUs from "../components/AboutUs.astro"
+import Caldos from "../components/CaldoDelDia.astro"
 import Plato from "../components/PlatoCard.astro"
 import Evento from "../components/EventoCard.astro"
 import type { $brand } from "astro:schema"
@@ -17,12 +20,10 @@ import type { $brand } from "astro:schema"
 		<title>Astro</title>
 	</head>
 	<body>
+        <NavBar/>
 		<Hero />
-		<Plato 
-        nombre="Zapatillas Air Max" 
-        precio="S/.120.00" 
-        imagen="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" 
-      	/>
+        <AboutUs/>
+		<Caldos/>
 
 		<Evento
 		titulo = "Titulo"
