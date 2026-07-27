@@ -14,7 +14,7 @@ const {
   ciudad = "AREQUIPA – PERÚ",
   telefonoFijo = "054 259778",
   celular = "961 662 599",
-  horarioAtencion = "12:00 am. a 4:30 pm.",
+  horarioAtencion = "12:00 am. a 5:30 pm.",
   mapaEmbedUrl = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1914.0187040010692!2d-71.5610892!3d-16.3720567!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91424a1aaf017bf3%3A0x6fbb09081ecce80d!2sLa%20Gran%20Reserva!5e0!3m2!1ses!2spe!4v1785040074163!5m2!1ses!2spe"
 } = Astro.props;
 ---
@@ -33,14 +33,15 @@ const {
         
         <div class="space-y-1">
             <p class="text-lg font-medium text-brand-brown-700">{direccion}</p>
+            <p class="text-lg font-mono- text-brand-brown-700">Camino al aeropuerto</p>
             <p class="text-sm tracking-wider uppercase font-semibold text-brand-brown-500">{ciudad}</p>
         </div>
 
         <hr class="border-brand-brown" />
 
         <div class="space-y-1 text-sm sm:text-base">
-            <p><span class="font-medium text-brand-brown-700">T.</span> {telefonoFijo}</p>
-            <p><span class="font-medium text-brand-brown-700">C.</span> {celular}</p>
+            <p><span class="font-medium text-brand-brown-700">Telf.</span> {telefonoFijo}</p>
+            <p><span class="font-medium text-brand-brown-700">Cel.</span> {celular}</p>
         </div>
 
         <div class="pt-2 space-y-2">
