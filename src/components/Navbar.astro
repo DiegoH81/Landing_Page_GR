@@ -9,7 +9,9 @@ const links = [
   { name: 'Contacto', href: '#contacto' },
 ];
 
-const telefono = "961662500";
+const telefono = "51961662500";
+const mensaje = encodeURIComponent("¡Hola! Me gustaría hacer un pedido de delivery.");
+const linkWhatsApp = `https://wa.me/${telefono}?text=${mensaje}`;
 ---
 
 <header class="fixed top-0 left-0 w-full z-50 p-4 sm:p-6 pointer-events-none">
@@ -17,7 +19,7 @@ const telefono = "961662500";
 
 
     <a 
-        href="#"
+        href="#inicio"
         class="bg-brand-red text-brand-cream px-6 py-4 font-black text-3xl tracking-widest flex items-center justify-center transition-opacity shadow-md font-['cursive']"
     >
         GR
@@ -35,7 +37,7 @@ const telefono = "961662500";
         ))}
     </nav>
 
-    <ActionButton href={`tel:${telefono}`}>
+    <ActionButton href={linkWhatsApp}>
             Pedir Delivery
     </ActionButton>    
 
