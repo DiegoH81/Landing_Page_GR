@@ -23,26 +23,50 @@ const caldos = [
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
     }
 ];
-
-const caldosLoop = [...caldos, ...caldos, ...caldos]
 ---
 
-
-
-<section class="py-16 bg-brand-red">
+<section class="py-16 bg-brand-cream overflow-hidden" id="platos">
     <div class="max-w-6xl mx-auto px-4">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+        
+        <div class="flex flex-row items-center justify-between mb-8">
             <div>
-                <h2 class="text-3xl md:text-5xl font-black text-brand-cream">
+                <span class="text-brand-mustard font-bold uppercase tracking-widest text-xs">Especialidades</span>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-red">
                     Caldos Típicos del Día
                 </h2>
             </div>
+
+            <div class="flex items-center gap-3">
+                <button 
+                    id="prevBtn" 
+                    type="button"
+                    aria-label="Anterior"
+                    class="p-3 bg-brand-cream border border-brand-red/20 text-brand-red hover:bg-brand-red hover:text-white transition-colors duration-200 shadow-sm cursor-pointer select-none"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button 
+                    id="nextBtn" 
+                    type="button"
+                    aria-label="Siguiente"
+                    class="p-3 bg-brand-cream border border-brand-red/20 text-brand-red hover:bg-brand-red hover:text-white transition-colors duration-200 shadow-sm cursor-pointer select-none"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
         </div>
 
-        <div class="overflow-hidden">
-            <div class="flex gap-6" id="Carrousel">
-                {caldosLoop.map((caldo) => (
-                    <div class="shrink-0 w-[280px] sm:w-[320px] md:w-[360px]">
+        <div class="overflow-hidden w-full py-4">
+            <div 
+                id="carouselContainer" 
+                class="flex gap-6 w-max select-none"
+            >
+                {caldos.map((caldo) => (
+                    <div class="shrink-0 w-[280px] sm:w-[320px] md:w-[360px] carousel-item">
                         <PlatoCard nombre={caldo.nombre} imagen={caldo.imagen} />
                     </div>
                 ))}
@@ -53,44 +77,81 @@ const caldosLoop = [...caldos, ...caldos, ...caldos]
 </section>
 
 <script>
-    import { animate } from "motion";
+    const container = document.getElementById('carouselContainer') as HTMLDivElement;
+    const prevBtn = document.getElementById('prevBtn') as HTMLButtonElement;
+    const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement;
 
-    const track = document.getElementById('Carrousel') as HTMLDivElement;
-    const cardWidth = 320 + 24;
-    const setWidth = cardWidth * 5;
+    if (container && prevBtn && nextBtn)
+    {
+        const getStep = () => {
+            const item = container.querySelector('.carousel-item') as HTMLDivElement;
+            return (item?.offsetWidth || 320) + 24; // 24px = gap-6
+        };
 
-    let x = -setWidth;
-    track.style.transform = `translateX(${x}px)`;
+        const finalizePendingAnimation = (direction: 'next' | 'prev') => {
+            container.style.transition = 'none';
+            if (direction === 'next' && container.firstElementChild) {
+                container.appendChild(container.firstElementChild);
+            } else if (direction === 'prev' && container.lastElementChild) {
+                container.prepend(container.lastElementChild);
+            }
+            container.style.transform = 'translateX(0px)';
+            void container.offsetHeight;
+        };
 
-    let isDown = false;
-    let startX = 0;
-    let startTx = 0;
+        let currentDirection: 'next' | 'prev' | null = null;
+        let isAnimating = false;
 
-    track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.clientX;
-        startTx = x;
-        track.style.cursor = 'grabbing';
-    });
+        const onTransitionEnd = () => {
+            if (!isAnimating) return;
+            container.style.transition = 'none';
+            
+            if (currentDirection === 'next' && container.firstElementChild) {
+                container.appendChild(container.firstElementChild);
+            }
+            
+            container.style.transform = 'translateX(0px)';
+            isAnimating = false;
+            currentDirection = null;
+        };
 
-    window.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        const dx = e.clientX - startX;
-        x = startTx + dx;
-        track.style.transform = `translateX(${x}px)`;
-    });
+        container.addEventListener('transitionend', onTransitionEnd);
 
-    window.addEventListener('mouseup', () => {
-        if (!isDown) return;
-        isDown = false;
-        track.style.cursor = 'grab';
+        nextBtn.addEventListener('click', () => {
+            const step = getStep();
 
-        if (x > 0) x -= setWidth;
-        if (x < -setWidth * 2) x += setWidth;
-        track.style.transform = `translateX(${x}px)`;
-    });
+            if (isAnimating)
+                finalizePendingAnimation(currentDirection || 'next');
 
-    track.querySelectorAll('img').forEach((img) => {
-        img.addEventListener('dragstart', (e) => e.preventDefault());
-    });
+            isAnimating = true;
+            currentDirection = 'next';
+
+            requestAnimationFrame(() => {
+                container.style.transition = 'transform 200ms cubic-bezier(0.2, 0, 0, 1)';
+                container.style.transform = `translateX(-${step}px)`;
+            });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const step = getStep();
+
+            if (isAnimating)
+                finalizePendingAnimation(currentDirection || 'prev');
+
+            isAnimating = true;
+            currentDirection = 'prev';
+
+            if (container.lastElementChild)
+                container.prepend(container.lastElementChild);
+            
+            container.style.transition = 'none';
+            container.style.transform = `translateX(-${step}px)`;
+            void container.offsetHeight;
+
+            requestAnimationFrame(() => {
+                container.style.transition = 'transform 200ms cubic-bezier(0.2, 0, 0, 1)';
+                container.style.transform = 'translateX(0px)';
+            });
+        });
+    }
 </script>

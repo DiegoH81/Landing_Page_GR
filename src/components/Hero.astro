@@ -1,25 +1,37 @@
 ---
-import ActionButton from './ActionButton.astro';
-
 const telefono = "961662500";
 const linkDelivery = `http://temp`;
 const linkReserva = `http://temp`;
 
-
+const fondoHero = "https://images.unsplash.com/photo-1544025162-d76694265947?w=1600&q=80";
 ---
 
-<section class="relative min-h-[100vh] flex items-center justify-center bg-linear-to-bl from-orange-100/70 via-orange-50/30 to-stone-50 px-4 py-20 text-center overflow-hidden">
-    
-    <div class="max-w-3xl mx-auto relative">    
-        <h1 class="text-5xl md:text-7xl font-black text-stone-950 tracking-tight leading-none">
-            TEMP TEXT<br />
-            <span class="text-brand-red">TEMP TEXT</span>
+<section class="relative min-h-screen flex items-center justify-center px-4 py-24 text-center overflow-hidden bg-brand-brown">
+  
+    <div class="absolute inset-0 z-0">
+        <img 
+        src={fondoHero} 
+        alt = "Gastronomía La Gran Reserva" 
+        class = "w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-brown via-brand-brown/60 to-black/40"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10 space-y-6 pt-12">
+        
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-brand-cream tracking-tight leading-tight">
+        El auténtico sabor <br />
+        <span class="font-serif italic font-normal text-brand-cream">de Arequipa en</span> <br />
+        <span class="text-brand-cream uppercase tracking-wider">La Gran Reserva</span>
         </h1>
         
-        <p class="text-brand-brown mt-6 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
-            Disfruta de nuestros espectaculares platos típicos del día y celebra tus momentos especiales con nosotros.
-        </p>
 
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-brand-cream/60 animate-bounce hidden sm:block">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
     </div>
 
 </section>

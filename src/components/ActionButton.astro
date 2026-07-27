@@ -18,11 +18,13 @@ const {
     href={href}
     target={target}
     rel={target === "_blank" ? "noopener noreferrer" : undefined}
-    class="w-full sm:w-auto inline-flex items-center justify-center gap-3 
-            font-normal py-8 px-8 shadow-lg shadow-brand-red/20 bg-brand-red
-            hover:opacity-90 text-white transition-all duration-300 hover:-translate-y-0.5
-            active:translate-y-0 active:scale-95
-            text-2xl sm:text-base">
+    class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 
+           py-4 px-8 bg-brand-red text-brand-cream
+           font-medium text-xs sm:text-sm tracking-[0.18em] uppercase
+           border border-brand-red/80 hover:bg-brand-brown hover:border-brand-brown
+           shadow-md shadow-brand-red/15 hover:shadow-xl hover:shadow-brand-brown/20
+           transition-all duration-300 hover:-translate-y-0.5
+           active:translate-y-0 active:scale-95 cursor-pointer">
     {icon && <span>{icon}</span>}
     <span>
         <slot />
