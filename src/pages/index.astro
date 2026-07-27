@@ -4,8 +4,8 @@ import "../styles/global.css"
 import NavBar from "../components/Navbar.astro"
 import Hero from "../components/Hero.astro"
 import AboutUs from "../components/AboutUs.astro"
-import Caldos from "../components/CaldoDelDia.astro"
-import Evento from "../components/EventoCard.astro"
+import Platos from "../components/PlatosCarrousel.astro"
+import Eventos from "../components/EventosList.astro"
 import Contacto from "../components/Contacto.astro"
 
 import type { $brand } from "astro:schema"
@@ -26,40 +26,8 @@ import type { $brand } from "astro:schema"
             <Hero />
         </div>
         <AboutUs/>
-		<Caldos/>
-
-
-        <div id = "eventos">
-            <Evento
-                titulo="Salón Principal 1"
-                descripcion="Si planeas brindar un agasajo a tus colaboradores en una fecha especial, disfruta de una celebración inolvidable llena de detalles, los mejores sabores regionales y un ambiente único."
-                imagen="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000"
-                textoBoton="PEDIR INFORMACIÓN"
-            />
-    
-            <Evento
-                titulo="Salon principal 2"
-                descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
-                imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
-                textoBoton="PEDIR INFORMACIÓN"
-                reversed={true}
-            />
-
-            <Evento
-                titulo="Salon principal 3"
-                descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
-                imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
-                textoBoton="PEDIR INFORMACIÓN"
-            />
-
-            <Evento
-                titulo="Salon principal 4"
-                descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
-                imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
-                textoBoton="PEDIR INFORMACIÓN"
-                reversed={true}
-            />
-        </div>
+		<Platos/>
+        <Eventos/>
         
         <Contacto />
 	</body>

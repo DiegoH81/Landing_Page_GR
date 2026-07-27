@@ -1,7 +1,7 @@
 ---
 import PlatoCard from '../components/PlatoCard.astro';
 
-const caldos = [
+const platos = [
     {
         nombre: "Entradas",
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
@@ -68,9 +68,9 @@ const caldos = [
                 id="carouselContainer" 
                 class="flex gap-6 w-max select-none"
             >
-                {caldos.map((caldo) => (
+                {platos.map((plato) => (
                     <div class="shrink-0 w-[280px] sm:w-[320px] md:w-[360px] carousel-item">
-                        <PlatoCard nombre={caldo.nombre} imagen={caldo.imagen} />
+                        <PlatoCard nombre={plato.nombre} imagen={plato.imagen} />
                     </div>
                 ))}
             </div>
