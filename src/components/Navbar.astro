@@ -3,10 +3,10 @@ import ActionButton from './ActionButton.astro';
 
 const links = [
   { name: 'Inicio', href: '#' },
-  { name: 'Carta', href: '#carta' },
+  { name: 'Nosotros', href: '#nosotros' },
   { name: 'Platos del día', href: '#platos' },
   { name: 'Eventos', href: '#eventos' },
-  { name: 'Nosotros', href: '#nosotros' },
+  //{ name: 'Carta', href: '#carta' },
   { name: 'Contacto', href: '#contacto' },
 ];
 
@@ -25,7 +25,7 @@ const telefono = "961662500";
     </a>
 
 
-    <nav class="hidden lg:flex items-center gap-6 bg-brand-cream px-8 py-3 text-sm font-semibold text-brand-red shadow-md">
+    <nav class="hidden lg:flex items-center gap-6 bg-brand-cream px-8 py-3 text-sm font-semibold text-brand-red shadow-lg border border-brand-red/10 rounded-none">
         {links.map((link) => (
         <a 
             href = {link.href} 
