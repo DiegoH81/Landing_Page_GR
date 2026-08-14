@@ -1,25 +1,31 @@
 ---
 import PlatoCard from '../components/PlatoCard.astro';
+import rocoto from '../assets/platos_tipicos/ROCOTO.jpeg';
 
-const caldos = [
+
+const platos = [
     {
-        nombre: "Chaque Arequipeño",
+        nombre: "Entradas",
+        imagen: rocoto
+    },
+    {
+        nombre: "Platos típicos",
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
     },
     {
-        nombre: "Chairo Tradicional",
+        nombre: "Sopas",
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
     },
     {
-        nombre: "Sopa de Chochoca",
+        nombre: "Pollos",
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
     },
     {
-        nombre: "Menestron Arequipeño",
+        nombre: "Pescados",
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
     },
     {
-        nombre: "Chuño Arequipeño",
+        nombre: "Parrilla",
         imagen: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=80"
     }
 ];
@@ -30,9 +36,8 @@ const caldos = [
         
         <div class="flex flex-row items-center justify-between mb-8">
             <div>
-                <span class="text-brand-mustard font-bold uppercase tracking-widest text-xs">Especialidades</span>
                 <h2 class="text-3xl md:text-5xl font-black text-brand-red">
-                    Caldos Típicos del Día
+                    Platos típicos y comida peruana
                 </h2>
             </div>
 
@@ -65,9 +70,9 @@ const caldos = [
                 id="carouselContainer" 
                 class="flex gap-6 w-max select-none"
             >
-                {caldos.map((caldo) => (
+                {platos.map((plato) => (
                     <div class="shrink-0 w-[280px] sm:w-[320px] md:w-[360px] carousel-item">
-                        <PlatoCard nombre={caldo.nombre} imagen={caldo.imagen} />
+                        <PlatoCard nombre={plato.nombre} imagen={plato.imagen} />
                     </div>
                 ))}
             </div>
