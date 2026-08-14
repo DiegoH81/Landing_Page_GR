@@ -1,0 +1,49 @@
+---
+import Evento from '../components/EventoCard.astro';
+---
+
+<section class="flex flex-col items-center justify-between pt-16 md:pt-24 mb-16" id="eventos">
+    
+    <!-- Encabezado de la sección -->
+    <div class="text-center max-w-2xl px-4 mb-12 md:mb-16">
+        <h2 class="text-3xl md:text-5xl font-black text-brand-red tracking-tight mb-4">
+            Eventos
+        </h2>
+        <p class="text-base md:text-lg text-gray-600 font-normal leading-relaxed">
+            Celebra tus grandes momentos con nosotros. Contamos con espacios diseñados para hacer de cada ocasión una experiencia inolvidable.
+        </p>
+    </div>
+
+    <div class="w-full space-y-12 md:space-y-12">
+        <Evento
+            titulo="Salón Principal 1"
+            descripcion="Si planeas brindar un agasajo a tus colaboradores en una fecha especial, disfruta de una celebración inolvidable llena de detalles, los mejores sabores regionales y un ambiente único."
+            imagen="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000"
+            textoBoton="PEDIR INFORMACIÓN"
+        />
+
+        <Evento
+            titulo="Salón Principal 2"
+            descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
+            imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
+            textoBoton="PEDIR INFORMACIÓN"
+            reversed={true}
+        />
+
+        <Evento
+            titulo="Salón Principal 3"
+            descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
+            imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
+            textoBoton="PEDIR INFORMACIÓN"
+        />
+
+        <Evento
+            titulo="Salón Principal 4"
+            descripcion="Nuestra terraza cuenta con amplios espacios ideales para cumpleaños, aniversarios y reuniones familiares con atención personalizada."
+            imagen="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000"
+            textoBoton="PEDIR INFORMACIÓN"
+            reversed={true}
+        />
+    </div>
+
+</section>
