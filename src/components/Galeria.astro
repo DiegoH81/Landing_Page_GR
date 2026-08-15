@@ -1,0 +1,154 @@
+---
+import { Image } from 'astro:assets';
+
+const imagenesCargadas = import.meta.glob<{ default: ImageMetadata }>('../assets/galeria/*.jpeg', { eager: true });
+
+const fotos = Object.entries(imagenesCargadas)
+    .map(([path, modulo]) => {
+        const numero = parseInt(path.match(/\/(\d+)\.jpeg$/)?.[1] || '0', 10);
+
+        return {
+            numero,
+            src: modulo.default,
+            alt: `Plato o momento ${numero}`,
+            titulo: `Gran Reserva ${numero}`
+        };
+    })
+    .sort((a, b) => a.numero - b.numero);
+
+const LIMITE_INICIAL = 6;
+---
+
+<section id="galeria" class="py-20 bg-brand-cream/20">
+    <div class="max-w-6xl mx-auto px-4">
+    
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl sm:text-5xl font-black text-brand-red">
+                Galería Fotográfica
+            </h2>
+            <h2 class="text-3xl sm:text-5xl font-black text-brand-mustard">
+                Rincón de Recuerdos & Sabores
+            </h2>
+        </div>
+
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        {fotos.map((item, index) => {
+            const esOculto = index >= LIMITE_INICIAL;
+            return (
+            <div 
+                class={`item-galeria break-inside-avoid relative overflow-hidden rounded-2xl group shadow-md hover:shadow-2xl transition-all duration-500 border border-stone-200/60 bg-white cursor-pointer ${
+                esOculto ? 'hidden opacity-0 scale-95' : 'block opacity-100 scale-100'
+                }`}
+                data-full-src={item.src.src}
+                data-titulo={item.titulo}
+                data-alt={item.alt}
+            >
+                <Image 
+                    src={item.src} 
+                    alt={item.alt}
+                    loading={index < 4 ? "eager" : "lazy"} 
+                    decoding="async"
+                    class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-brown/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                    <p class="text-brand-cream font-serif text-xl font-bold tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        {item.titulo}
+                    </p>
+                </div>
+            </div>
+            );
+        })}
+        </div>
+
+        {fotos.length > LIMITE_INICIAL && (
+        <div class="mt-12 text-center" id="contenedor-btn-galeria">
+            <button 
+                id="btn-cargar-mas"
+                class="inline-flex items-center gap-2 bg-brand-red text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:bg-brand-brown transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+            >
+                <span>Ver más fotos</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+        </div>
+        )}
+
+    </div>
+</section>
+
+<dialog id="modal-galeria" class="m-auto bg-transparent backdrop:bg-black/85 p-4 max-w-5xl w-full max-h-screen outline-none border-none overflow-visible">
+    <div class="relative flex flex-col items-center justify-center w-full h-full min-h-[50vh]">
+        
+        <button id="btn-cerrar-modal" class="absolute -top-10 right-0 text-white hover:text-brand-mustard transition-colors p-2 cursor-pointer focus:outline-none z-50">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <img id="img-modal" src="" alt="" class="max-h-[80vh] w-auto max-w-full object-contain rounded-xl shadow-2xl block mx-auto" />
+        <p id="titulo-modal" class="text-white font-serif text-xl font-bold mt-4 text-center w-full"></p>
+    </div>
+</dialog>
+
+<script>
+    const btn = document.getElementById('btn-cargar-mas');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            const fotosOcultas = document.querySelectorAll('.item-galeria.hidden');
+            
+            Array.from(fotosOcultas).slice(0, 6).forEach((el, idx) => {
+                el.classList.remove('hidden');
+                setTimeout(() => {
+                    el.classList.remove('opacity-0', 'scale-95');
+                    el.classList.add('opacity-100', 'scale-100');
+                }, idx * 100);
+            });
+
+            if (document.querySelectorAll('.item-galeria.hidden').length === 0) {
+                const contenedorBtn = document.getElementById('contenedor-btn-galeria');
+                if (contenedorBtn) contenedorBtn.style.display = 'none';
+            }
+        });
+    }
+
+    // 2. Lógica del Lightbox (Modal)
+    const modal = document.getElementById('modal-galeria') as HTMLDialogElement;
+    const imgModal = document.getElementById('img-modal') as HTMLImageElement;
+    const tituloModal = document.getElementById('titulo-modal');
+    const btnCerrar = document.getElementById('btn-cerrar-modal');
+
+    // Event listener delegado para las fotos
+    document.getElementById('galeria')?.addEventListener('click', (e) => {
+        const tarjeta = (e.target as HTMLElement).closest('.item-galeria') as HTMLElement;
+        if (!tarjeta) return;
+
+        const fullSrc = tarjeta.dataset.fullSrc;
+        const titulo = tarjeta.dataset.titulo;
+        const alt = tarjeta.dataset.alt;
+
+        if (fullSrc && modal && imgModal) {
+            imgModal.src = fullSrc;
+            imgModal.alt = alt || '';
+            if (tituloModal) tituloModal.textContent = titulo || '';
+            modal.showModal();
+        }
+    });
+
+    // Cerrar al hacer clic en el botón X
+    btnCerrar?.addEventListener('click', () => modal?.close());
+
+    // Cerrar al hacer clic en el fondo oscuro
+    modal?.addEventListener('click', (e) => {
+        const dialogDimensions = modal.getBoundingClientRect();
+        if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+        ) {
+            modal.close();
+        }
+    });
+</script>
