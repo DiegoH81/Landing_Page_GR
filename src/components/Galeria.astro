@@ -10,8 +10,7 @@ const fotos = Object.entries(imagenesCargadas)
         return {
             numero,
             src: modulo.default,
-            alt: `Plato o momento ${numero}`,
-            titulo: `Gran Reserva ${numero}`
+            alt: `Momento ${numero}`
         };
     })
     .sort((a, b) => a.numero - b.numero);
@@ -40,7 +39,6 @@ const LIMITE_INICIAL = 6;
                 esOculto ? 'hidden opacity-0 scale-95' : 'block opacity-100 scale-100'
                 }`}
                 data-full-src={item.src.src}
-                data-titulo={item.titulo}
                 data-alt={item.alt}
             >
                 <Image 
@@ -53,9 +51,6 @@ const LIMITE_INICIAL = 6;
 
                 <!-- Overlay -->
                 <div class="absolute inset-0 bg-gradient-to-t from-brand-brown/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                    <p class="text-brand-cream font-serif text-xl font-bold tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        {item.titulo}
-                    </p>
                 </div>
             </div>
             );
@@ -88,7 +83,6 @@ const LIMITE_INICIAL = 6;
             </svg>
         </button>
         <img id="img-modal" src="" alt="" class="max-h-[80vh] w-auto max-w-full object-contain rounded-xl shadow-2xl block mx-auto" />
-        <p id="titulo-modal" class="text-white font-serif text-xl font-bold mt-4 text-center w-full"></p>
     </div>
 </dialog>
 
@@ -113,13 +107,10 @@ const LIMITE_INICIAL = 6;
         });
     }
 
-    // 2. Lógica del Lightbox (Modal)
     const modal = document.getElementById('modal-galeria') as HTMLDialogElement;
     const imgModal = document.getElementById('img-modal') as HTMLImageElement;
-    const tituloModal = document.getElementById('titulo-modal');
     const btnCerrar = document.getElementById('btn-cerrar-modal');
 
-    // Event listener delegado para las fotos
     document.getElementById('galeria')?.addEventListener('click', (e) => {
         const tarjeta = (e.target as HTMLElement).closest('.item-galeria') as HTMLElement;
         if (!tarjeta) return;
@@ -131,15 +122,12 @@ const LIMITE_INICIAL = 6;
         if (fullSrc && modal && imgModal) {
             imgModal.src = fullSrc;
             imgModal.alt = alt || '';
-            if (tituloModal) tituloModal.textContent = titulo || '';
             modal.showModal();
         }
     });
 
-    // Cerrar al hacer clic en el botón X
     btnCerrar?.addEventListener('click', () => modal?.close());
 
-    // Cerrar al hacer clic en el fondo oscuro
     modal?.addEventListener('click', (e) => {
         const dialogDimensions = modal.getBoundingClientRect();
         if (
