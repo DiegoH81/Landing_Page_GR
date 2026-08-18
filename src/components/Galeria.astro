@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-const imagenesCargadas = import.meta.glob<{ default: ImageMetadata }>('../assets/galeria/*.jpeg', { eager: true });
+const imagenesCargadas = import.meta.glob<{ default: ImageMetadata }>('../assets/galeria/*.webp', { eager: true });
 
 const fotos = Object.entries(imagenesCargadas)
     .map(([path, modulo]) => {

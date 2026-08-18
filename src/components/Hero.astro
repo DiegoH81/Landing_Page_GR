@@ -1,36 +1,89 @@
 ---
 import { Image } from 'astro:assets';
-import fondoHero from '../assets/hero/fondo_1.webp';
+import fondoHero1 from '../assets/hero/fondo_1.webp';
+import fondoHero2 from '../assets/hero/fondo_2.webp';
+import fondoHero3 from '../assets/hero/fondo_3.webp';
+import fondoHero4 from '../assets/hero/fondo_4.webp';
+import fondoHero5 from '../assets/hero/fondo_5.webp';
 
+const imagenesHero = [
+  { src: fondoHero1, alt: "Plato tradicional de La Gran Reserva" },
+  { src: fondoHero2, alt: "Ambiente y gastronomía en Arequipa" },
+  { src: fondoHero3, alt: "Especialidades culinarias La Gran Reserva" },
+  { src: fondoHero4, alt: "Gastronomía arequipeña" },
+  { src: fondoHero5, alt: "Experiencia en La Gran Reserva" },
+];
 ---
 
 <section class="relative min-h-screen flex items-center justify-center px-4 py-24 text-center overflow-hidden bg-brand-brown">
   
-    <div class="absolute inset-0 z-0">
-        <Image 
-            src={fondoHero} 
-            alt="Gastronomía La Gran Reserva" 
-            class="w-full h-full object-cover"
-            loading="eager"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-brown via-brand-brown/60 to-black/40"></div>
-    </div>
+  <div class="absolute inset-0 z-0" id="hero-slider">
+    {imagenesHero.map((imagen, index) => (
+      <Image 
+        src={imagen.src} 
+        alt={imagen.alt} 
+        class={`hero-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out pointer-events-none ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+        loading={index === 0 ? "eager" : "lazy"}
+        fetchpriority={index === 0 ? "high" : "low"}
+      />
+    ))}
+    
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-brown via-brand-brown/60 to-black/40 z-10 pointer-events-none"></div>
+  </div>
 
-    <div class="max-w-4xl mx-auto relative z-10 space-y-6 pt-12">
-        
-        <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-brand-cream tracking-tight leading-tight">
-        El auténtico sabor <br />
-        <span class="font-serif italic font-normal text-brand-cream">de Arequipa en</span> <br />
-        <span class="text-brand-cream uppercase tracking-wider">La Gran Reserva</span>
-        </h1>
-        
+  <div class="max-w-4xl mx-auto relative z-20 space-y-6 pt-12">
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-brand-cream tracking-tight leading-tight">
+      El auténtico sabor <br />
+      <span class="font-serif italic font-normal text-brand-cream">de Arequipa en</span> <br />
+      <span class="text-brand-cream uppercase tracking-wider">La Gran Reserva</span>
+    </h1>
+  </div>
 
-    </div>
-
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-brand-cream/60 animate-bounce hidden sm:block">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-    </div>
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-brand-cream/60 animate-bounce hidden sm:block">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </div>
 
 </section>
+
+<script>
+  let sliderInterval: number | undefined;
+
+  function initHeroSlider()
+  {
+    const container = document.getElementById('hero-slider');
+    if (!container) return;
+
+    const slides = container.querySelectorAll<HTMLImageElement>('.hero-slide');
+    if (slides.length <= 1)
+        return;
+    
+    if (sliderInterval)
+    {
+      clearInterval(sliderInterval);
+      sliderInterval = undefined;
+    }
+
+    let currentIndex = 0;
+    const intervalTime = 4500;
+
+    sliderInterval = window.setInterval(() => {
+      slides[currentIndex].classList.remove('opacity-100');
+      slides[currentIndex].classList.add('opacity-0');
+
+      currentIndex = (currentIndex + 1) % slides.length;
+
+      slides[currentIndex].classList.remove('opacity-0');
+      slides[currentIndex].classList.add('opacity-100');
+    }, intervalTime);
+  }
+
+  document.addEventListener('astro:page-load', initHeroSlider);
+
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', initHeroSlider, { once: true });
+  else
+    initHeroSlider();
+
+</script>
